@@ -1,5 +1,6 @@
 package com.student.requests;
 
+import com.student.specs.SpecificationFactory;
 import com.student.tests.TestBase;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -30,6 +31,7 @@ public class RestClient extends TestBase {
     public Response doPostRequest(String uri, Object body){
         Response response = RestAssured.given ()
                 .contentType (ContentType.JSON)
+                .spec (SpecificationFactory.logPayloadResponseInfo ())
                 .when ()
                 .body (body)
                 .post (uri);

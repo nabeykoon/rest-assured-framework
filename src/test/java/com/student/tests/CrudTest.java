@@ -2,6 +2,7 @@ package com.student.tests;
 
 import com.github.javafaker.Faker;
 import com.student.requests.RequestFactory;
+import com.student.specs.SpecificationFactory;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import io.restassured.RestAssured;
@@ -16,11 +17,12 @@ public class CrudTest extends TestBase {
 
     @Story("This is CRUD testing story")
     @Feature("This is to test to get all students from database")
-    @Test
+    @Test(groups = {"smoke", "fullRegression"})
     public void getAllStudent() {
 
         requests.getAllStudents ()
                 .then ()
+                .spec (SpecificationFactory.getGenericResponseSpec ())
                 .statusCode (200)
                 .log ()
                 .all ();
@@ -42,6 +44,7 @@ public class CrudTest extends TestBase {
         courses.add ("Java");
         requests.createNewStudent ("", firstName, lastName, email, programme, courses)
                 .then ()
+                .spec (SpecificationFactory.getGenericResponseSpec ())
                 .statusCode (201);
     }
 }
